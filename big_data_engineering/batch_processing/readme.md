@@ -1,7 +1,7 @@
 # NYC Taxi Data ETL Pipeline — Documentation & Lessons Learned
 
 ## Project Scope
-This project aims to build a **production-grade Batch ETL pipeline** that processes NYC Yellow Taxi Trip data from public sources. The pipeline:
+This project aims to build a **Batch ETL pipeline** that processes NYC Yellow Taxi Trip data from public sources. The pipeline:
 
 - **Downloads** raw `.parquet` files for each month
 - **Cleans** the data
@@ -17,7 +17,7 @@ This project serves as a stepping stone for working with **big data, analytics p
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Tool           | Role                          | Why?                                          | Alternatives          |
 |----------------|-------------------------------|-----------------------------------------------|------------------------|
@@ -77,7 +77,7 @@ To keep everything reproducible, we used Docker.
 ### 3. Bad Timestamps in Data
 - **Problem:** ETL output showed folders like `year=2002`, `year=2010` etc., even when processing only 2024
 - **Cause:** Some rows had corrupted or strange timestamps
-- **Fix:** We added a filter:
+- **Fix:** Added a filter:
 
 ```python
 # Before writing
@@ -94,7 +94,7 @@ docker-compose down --remove-orphans
 
 ---
 
-## 🧪 Testing the ETL Script
+## Testing the ETL Script
 Use this inside the Docker container:
 
 ```bash
