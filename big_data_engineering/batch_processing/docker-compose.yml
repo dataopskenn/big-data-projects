@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  etl:
+    build:
+      context: ./docker/etl         # Where your Dockerfile lives
+    volumes:
+      - ./data:/data                # Mount local ./data to container’s /data
+    container_name: nyc_etl_engine

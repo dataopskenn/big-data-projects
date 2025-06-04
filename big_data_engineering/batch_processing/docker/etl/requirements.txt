@@ -1,0 +1,6 @@
+pandas
+duckdb
+pyarrow >=14.0.0
+# pyarrow.dataset
+# pyarrow.parquet
+polars
