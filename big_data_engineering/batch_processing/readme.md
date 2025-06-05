@@ -52,40 +52,40 @@ Output folder structure:
 ---
 
 ## Docker-Based Development
-To keep everything reproducible, we used Docker.
+To keep everything reproducible, I've used Docker.
 
 ### Benefits:
-- Same Python and library versions on every run
-- No "it works on my machine" bugs
+- Same Python and library versions on every run.
+- Environment is reproducible on any machine, so chances of failure is greatly reduced.
 
 ---
 
 ## Lessons Learned & Challenges
 
 ### 1. PyArrow Partitioning Pitfall
-- **Problem:** PyArrow refused to write data because the output directory already existed
-- **Fix:** We used `existing_data_behavior="delete_matching"`
+- **Problem:** PyArrow refused to write data because the output directory already existed.
+- **Fix:** We used `existing_data_behavior="delete_matching"` and wrote the url of the directory as f-string so it is processed at runtime and not interpreted as a constant value.
 - **Tip:** Never write directly to folders that contain stray files. Partition folders must be clean.
 
 ### 2. ParquetWriterOptions Error
-- **Problem:** Code crashed with `AttributeError: module 'pyarrow.parquet' has no attribute 'ParquetWriterOptions'`
-- **Cause:** You’re using a PyArrow version **< 14.0.0**
+- **Problem:** Code crashed with `AttributeError: module 'pyarrow.parquet' has no attribute 'ParquetWriterOptions'`.
+- **Cause:** I used a PyArrow version **< 14.0.0** where this attribute was not available.
 - **Fix:** Either:
-  - Upgrade `pyarrow` in `requirements.txt` to `>=14.0.0`
-  - Or remove `file_options=...` completely
+  - Upgrade `pyarrow` in `requirements.txt` to `>=14.0.0`.
+  - Or remove `file_options=...` completely.
 
 ### 3. Bad Timestamps in Data
-- **Problem:** ETL output showed folders like `year=2002`, `year=2010` etc., even when processing only 2024
-- **Cause:** Some rows had corrupted or strange timestamps
+- **Problem:** ETL output showed folders like `year=2002`, `year=2010` etc., even when processing only 2024.
+- **Cause:** Some rows had corrupted or strange timestamps.
 - **Fix:** Added a filter:
 
 ```python
-# Before writing
+# Strict filtering
 pl.col("year") == year & pl.col("month") == month
 ```
 
 ### 4. Orphan Docker Containers
-- **Problem:** Running many ETL jobs created containers like `etl-run-xxxx`, which didn’t stop automatically
+- **Problem:** Running many ETL jobs created containers like `etl-run-xxxx`, which didn’t stop automatically.
 - **Fix:**
 
 ```bash
@@ -131,14 +131,14 @@ docker system prune -a --volumes
 ---
 
 ## Key Python Concepts Used
-- **Polars filtering and date parsing**
-- **Downloading files with `urllib.request`**
-- **CLI argument parsing with `argparse`**
-- **Partitioned file saving with PyArrow**
+- **Polars filtering and date parsing**.
+- **Downloading files with `urllib.request`**.
+- **CLI argument parsing with `argparse`**.
+- **Partitioned file saving with PyArrow**.
 
 ---
 
 ## What's Next
-- Query this data using DuckDB or Trino
-- Build a Power BI dashboard via ODBC connector to DuckDB
-- Add orchestration using **Airflow** or **Prefect** or **Mage** or all as different solutions for different use-cases
+- Query this data using DuckDB or Trino.
+- Build a Power BI dashboard via ODBC connector to DuckDB.
+- Add orchestration using **Airflow** or **Prefect** or **Mage** or all as different solutions for different use-cases.

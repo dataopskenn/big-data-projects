@@ -30,17 +30,17 @@ def download_data(year: int, month: int) -> Optional[str]:
 
     # Skip if file already downloaded
     if os.path.exists(local_path):
-        print(f"✅ File already exists: {local_path}")
+        print(f"File already exists: {local_path}")
         return local_path
 
     try:
         os.makedirs(RAW_DIR, exist_ok=True)  # Ensure directory exists
-        print(f"⬇️  Downloading {url}")
+        print(f"Downloading {url}")
         urllib.request.urlretrieve(url, local_path)  # Download file
-        print(f"✅ Downloaded: {local_path}")
+        print(f"Downloaded: {local_path}")
         return local_path
     except Exception as e:
-        print(f"❌ Failed to download {url}: {e}")
+        print(f"Failed to download {url}: {e}")
         return None
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ def clean_data(df: pl.DataFrame) -> pl.DataFrame:
         pl.col("tpep_pickup_datetime").dt.month().alias("month")
     ])
 
-    print(f"✅ Cleaned {df.shape[0]} rows")
+    print(f"Cleaned {df.shape[0]} rows")
     return df
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ def write_partitioned_parquet(df: pl.DataFrame, output_dir: str):
     Writes a Polars DataFrame to partitioned Parquet using pyarrow.dataset.
     Partitions by 'year' and 'month'.
     """
-    print(f"📝 Writing to: {output_dir}")
+    print(f"Writing to: {output_dir}")
 
     # Convert to Arrow table
     arrow_table = df.to_arrow()
@@ -112,7 +112,7 @@ def write_partitioned_parquet(df: pl.DataFrame, output_dir: str):
         # file_options=pq.ParquetWriterOptions(compression="snappy")
     )
 
-    print(f"✅ Partitioned parquet written by year/month")
+    print(f"Partitioned parquet written by year/month")
 
 # ---------------------------------------------------------------------------------------------------------------
 # STEP 4: FULL ETL FOR A MONTH
@@ -122,11 +122,11 @@ def run_etl(year: int, month: int):
     """
     Complete ETL pipeline: download, clean, and save partitioned parquet.
     """
-    print(f"\n🚀 ETL for {year}-{month:02d}")
+    print(f"\n ETL for {year}-{month:02d}")
 
     file_path = download_data(year, month)
     if not file_path:
-        print(f"⚠️  Skipping {year}-{month:02d} due to download error")
+        print(f" Skipping {year}-{month:02d} due to download error")
         return
 
     try:
@@ -141,7 +141,7 @@ def run_etl(year: int, month: int):
 
         write_partitioned_parquet(df_clean, PROCESSED_DIR)  # Save it
     except Exception as e:
-        print(f"❌ ETL failed for {year}-{month:02d}: {e}")
+        print(f"ETL failed for {year}-{month:02d}: {e}")
 
 # ---------------------------------------------------------------------------------------------------------------
 # ENTRYPOINT: CLI HANDLING
@@ -163,4 +163,4 @@ if __name__ == "__main__":
     elif args.month:
         run_etl(args.year, args.month)
     else:
-        print("⚠️  Please provide either --month <1-12> or --all-months")
+        print(" Please provide either --month <1-12> or --all-months")
