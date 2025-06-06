@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------------------------
 # FILE: config.py
-# Contains configuration variables to avoid magic constants and promote DRY code.
+# Contains configuration variables to avoid magic constants and promote Do-not Repeat Yourself (DRY) code.
 # ----------------------------------------------------------------------------------
 
 from pathlib import Path

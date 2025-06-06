@@ -2,6 +2,7 @@
 # FILE: transformer.py
 # Responsible solely for cleaning and transforming the data.
 # Uses Polars for fast in-memory transformations.
+# Follows Single Responsibility Principle (SRP).
 # ----------------------------------------------------------------------------------
 
 import polars as pl

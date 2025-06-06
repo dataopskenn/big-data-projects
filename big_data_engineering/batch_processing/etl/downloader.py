@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------------------------
 # FILE: downloader.py
-# Responsible solely for downloading files. Follows SRP.
+# Responsible solely for downloading files. Follows Single Responsibility Principle (SRP).
 # ----------------------------------------------------------------------------------
 
 import os

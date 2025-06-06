@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------------
 # FILE: writer.py
 # Responsible for writing cleaned data to disk using partitioning.
-# Follows SRP and is separated for easier testing and logging.
+# Follows Single Responsibility Principle (SRP) and is separated for easier testing and logging.
 # ----------------------------------------------------------------------------------
 
 import pyarrow.dataset as ds
