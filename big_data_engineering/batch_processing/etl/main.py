@@ -8,6 +8,7 @@ import argparse
 from pipeline import run_etl
 
 
+
 def main():
     """
     Parses command-line arguments and calls ETL pipeline

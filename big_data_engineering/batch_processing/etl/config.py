@@ -3,10 +3,12 @@
 # Contains configuration variables to avoid magic constants and promote Do-not Repeat Yourself (DRY) code.
 # ----------------------------------------------------------------------------------
 
+import os
 from pathlib import Path
 
-# Base directory paths (absolute or relative to container volume if in Docker)
-BASE_DIR = Path("/data")
+# Allow override from environment variable, else fallback to project-relative path
+BASE_DIR = Path(os.getenv("DATA_PATH", Path(__file__).resolve().parent.parent / "data"))
+
 RAW_DIR = BASE_DIR / "raw"
 PROCESSED_DIR = BASE_DIR / "processed" / "yellow_tripdata"
 

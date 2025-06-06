@@ -9,6 +9,7 @@ import polars as pl
 from downloader import download_data
 from transformer import clean_data
 from writer import write_partitioned_parquet
+import os
 
 
 def run_etl(year: int, month: int):
@@ -22,6 +23,8 @@ def run_etl(year: int, month: int):
     """
     print(f"Starting ETL for {year}-{month:02d}")
     file_path = download_data(year, month)
+
+    print("Exists:", os.path.exists(file_path))
 
     if not file_path:
         print("Skipping due to failed download.")

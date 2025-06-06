@@ -11,8 +11,8 @@ from typing import Optional
 # CONFIGURATION
 # ---------------------------------------------------------------------------------------------------------------
 
-RAW_DIR = "/data/raw_data"  # Directory to store raw downloaded parquet files
-PROCESSED_DIR = f"/data/processed_data/yellow_tripdata"  # Directory for cleaned, partitioned output
+RAW_DIR = "/data/raw"  # Directory to store raw downloaded parquet files
+PROCESSED_DIR = f"/data/processed/yellow_tripdata"  # Directory for cleaned, partitioned output
 BASE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"  # NYC Taxi data source
 
 # ---------------------------------------------------------------------------------------------------------------
