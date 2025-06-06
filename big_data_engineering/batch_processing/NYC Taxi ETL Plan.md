@@ -25,7 +25,7 @@ This markdown outlines what has been completed, what needs improvement, and the 
 - Partitioning logic is implemented
 - Basic CLI interface via argparse
 
-**What I will improve:**
+**What will improve:**
 | Issue | Reason | Solution |
 |-------|--------|----------|
 | Monolithic structure | Hard to test or extend | Split into modules: downloader, transformer, writer, config |
@@ -43,7 +43,7 @@ This markdown outlines what has been completed, what needs improvement, and the 
 - Mounts volumes for persistent data
 - Named containers for clarity
 
-**Improvements:**
+**What will improve:**
 | Issue | Reason | Solution |
 |-------|--------|----------|
 | Dockerfile not validated | Unknown base image | Use minimal Python base image with requirements.txt |
@@ -58,7 +58,7 @@ This markdown outlines what has been completed, what needs improvement, and the 
 - Required libraries listed
 - PyArrow version pinned for compatibility
 
-**What I will improve:**
+**What will improve:**
 | Issue | Reason | Solution |
 |-------|--------|----------|
 | Unused pandas import | Wastes space | Remove unless needed |
@@ -122,7 +122,7 @@ This markdown outlines what has been completed, what needs improvement, and the 
 ## Final Project Structure (Planned)
 
 ```
-project_root/
+batch_processing/
 ├── etl/
 │   ├── downloader.py
 │   ├── transformer.py
@@ -149,7 +149,3 @@ project_root/
 ```
 
 ---
-
-## Next Step
-
-I am ready to begin with the refactor of `nyc_etl.py` into separate, testable components with logging and configuration management.
