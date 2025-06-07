@@ -302,8 +302,6 @@ By applying these best practices, I ensure the pipeline is:
 
 ## References
 
-- VanderPlas, Jake. Python Data Science Handbook, O’Reilly, 2016 - foundational for Python data tools.
-
 - Polars Documentation, https://pola-rs.github.io/polars-book/ - performance-oriented dataframe library.
 
 - Apache Arrow Project, https://arrow.apache.org/ - for Parquet storage and efficient I/O.
