@@ -36,17 +36,18 @@ Each module or function has exactly one reason to change. This keeps the codebas
 If downloading, cleaning, and writing all happened in one giant function, a small change in the cleaning logic risks breaking downloads or writing. It’s also hard to test or reuse parts independently.
 
 **How I applied it here:**
+
 I separated the code into modules:
 
-`downloader.py` only downloads files, ensuring idempotency by skipping files already saved.
+- `downloader.py` only downloads files, ensuring idempotency by skipping files already saved.
 
-`transformer.py` only cleans and prepares the data.
+- `transformer.py` only cleans and prepares the data.
 
-`writer.py` only writes cleaned data to disk with partitioning.
+- `writer.py` only writes cleaned data to disk with partitioning.
 
-`pipeline.py` orchestrates these steps.
+- `pipeline.py` orchestrates these steps.
 
-`config.py` centralizes constants and paths.
+- `config.py` centralizes constants and paths.
 
 Example from `downloader.py`:
 
@@ -77,11 +78,12 @@ Notice how I check if the file already exists and skip downloading if so. This m
 
 ## Configuration Management - Avoiding Hardcoded Paths
 
-What is it?
+**What is it?**
 
 Centralizing constants like file paths, URLs, and environment variables in a dedicated module or `.env` file rather than sprinkling them throughout the code.
 
 Why is this important?
+
 Hardcoded paths break portability. For example, absolute paths like `/data/raw` behave differently on Windows vs Linux, and they are not relative to the project directory.
 
 **How I applied it here:**
@@ -114,6 +116,7 @@ I can now change data paths without modifying the source code, which improves fl
 Data is often incomplete, inconsistent, or incorrectly typed. Cleaning involves removing or imputing missing values, parsing dates, and validating ranges.
 
 **Why is this important?**
+
 Garbage in, garbage out. Without cleaning, downstream analytics will be inaccurate or fail.
 
 **How I applied it here:**
@@ -138,9 +141,11 @@ I can avoid unnecessary computation overhead by checking types before parsing. P
 ## Writing Partitioned Parquet - Efficient Storage and Querying
 
 **What is it?**
+
 Partitioning data by key columns (here `year` and `month)` physically separates data, enabling queries to scan only relevant data subsets.
 
 **Why is this important?**
+
 This is essential for scale: scanning the entire dataset on every query is expensive.
 
 **How I applied it:**
@@ -163,7 +168,7 @@ Key points:
 
 - Writing compressed Parquet files saves storage and improves I/O.
 
---
+---
 
 ## Avoiding Double Execution - `if __name__ == "__main__":`
 
@@ -172,6 +177,7 @@ Key points:
 This Python idiom ensures scripts only run code when executed directly, not when imported as modules.
 
 **Why is this important?**
+
 In orchestrators like Airflow or during testing, I import modules without wanting side-effects like starting ETL runs.
 
 **How I applied it:**
@@ -183,6 +189,8 @@ if __name__ == "__main__":
 
 This enables reuse and prevents unexpected pipeline executions during imports.
 
+---
+
 ## Containerization with Docker - Consistency Everywhere
 
 **What is it?**
@@ -190,6 +198,7 @@ This enables reuse and prevents unexpected pipeline executions during imports.
 Packaging the entire runtime environment (Python version, dependencies, OS) and code inside containers.
 
 **Why is this important?**
+
 Prevents "works on my machine" syndrome, simplifies deployment, and standardizes the environment.
 
 **How I applied it:**
@@ -204,13 +213,14 @@ This guarantees the pipeline runs identically across environments and supports s
 
 ---
 
-### Querying with DuckDB — SQL Over Parquet Files
+### Querying with DuckDB —-SQL Over Parquet Files
 
 **What is it?**
 
 DuckDB is an embedded analytical SQL engine that can query Parquet files directly without loading everything into memory.
 
 **Why is this important?**
+
 It bridges raw data and business intelligence without heavy infrastructure, enabling fast, flexible analysis.
 
 **How I applied it:**
@@ -242,7 +252,7 @@ Tests catch bugs early and enable safe refactoring.
 
 - I use mocks for external dependencies to keep tests fast.
 
-- This reduces risk and improves developer confidence.
+- Reduces risks and improves developer confidence in the quality of output.
 
 ---
 
@@ -304,6 +314,6 @@ By applying these best practices, I ensure the pipeline is:
 
 - Apache Airflow Documentation, https://airflow.apache.org/ - orchestration best practices.
 
-- [DataTalks.Club](https://datatalks.club/)
-[Datatalks.Club GitHub](https://github.com/DataTalksClub/)
-[Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
+- DataTalks.Club, https://datatalks.club/  
+  [Datatalks.Club GitHub](https://github.com/DataTalksClub/)  
+  [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)  

@@ -68,13 +68,13 @@ I'll build these projects with inspiration and guidance from some incredible edu
   GitHub: [https://github.com/EcZachly](https://github.com/EcZachly)  
   Zach is one of the best educators and data engineers around.
 
-- [DataTalks.Club](https://datatalks.club/)
+- DataTalks.Club, https://datatalks.club/  
   [Datatalks.Club GitHub](https://github.com/DataTalksClub/)
-  [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
-- [Made With ML by Goku Mohandas](https://madewithml.com/)
-- [HuggingFace Transformers Course](https://huggingface.co/course)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [LangChain Documentation](https://docs.langchain.com/)
-- [EvidentlyAI Docs](https://docs.evidentlyai.com/)
-- [Apache Spark Official Docs](https://spark.apache.org/docs/latest/)
-- [Docker Documentation](https://docs.docker.com/)
+  [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)  
+- [Made With ML by Goku Mohandas](https://madewithml.com/)  
+- [HuggingFace Transformers Course](https://huggingface.co/course)  
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)  
+- [LangChain Documentation](https://docs.langchain.com/)  
+- [EvidentlyAI Docs](https://docs.evidentlyai.com/)  
+- [Apache Spark Official Docs](https://spark.apache.org/docs/latest/)  
+- [Docker Documentation](https://docs.docker.com/)  
