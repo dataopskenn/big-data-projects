@@ -69,7 +69,7 @@ I'll build these projects with inspiration and guidance from some incredible edu
   Zach is one of the best educators and data engineers around.
 
 - DataTalks.Club, https://datatalks.club/  
-  [Datatalks.Club GitHub](https://github.com/DataTalksClub/)
+  [Datatalks.Club GitHub](https://github.com/DataTalksClub/)  
   [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)  
 - [Made With ML by Goku Mohandas](https://madewithml.com/)  
 - [HuggingFace Transformers Course](https://huggingface.co/course)  
