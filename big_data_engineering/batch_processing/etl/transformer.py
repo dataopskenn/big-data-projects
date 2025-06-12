@@ -5,48 +5,47 @@
 # Follows Single Responsibility Principle (SRP).
 # ----------------------------------------------------------------------------------
 
+# transformer.py
 import polars as pl
-
 
 def clean_data(df: pl.DataFrame) -> pl.DataFrame:
     """
     Cleans the input DataFrame by:
     - Removing nulls from critical columns
-    - Ensuring datetime format on pickup and dropoff columns
-    - Extracting year and month from pickup timestamp for partitioning
-
-    Separation of concerns is applied here so that transformation logic is testable independently.
+    - Parsing pickup and dropoff as Datetime with explicit format
+    - Extracting year and month from pickup timestamp
     """
-    print("Cleaning data...")
-
-    # Filter nulls from critical fields
+    # 1. Filter out rows missing critical numeric fields
     df = df.filter(
         (pl.col("passenger_count").is_not_null()) &
         (pl.col("trip_distance").is_not_null()) &
         (pl.col("total_amount").is_not_null())
     )
 
-    # Convert to datetime if needed
-    if df.schema.get("tpep_pickup_datetime") != pl.Datetime:
-        df = df.with_columns(
-            pl.col("tpep_pickup_datetime").str.strptime(pl.Datetime, strict=False)
-        )
-    if df.schema.get("tpep_dropoff_datetime") != pl.Datetime:
-        df = df.with_columns(
-            pl.col("tpep_dropoff_datetime").str.strptime(pl.Datetime, strict=False)
-        )
-
-    # Filter invalid timestamps
-    df = df.filter(
-        (pl.col("tpep_pickup_datetime").is_not_null()) &
-        (pl.col("tpep_dropoff_datetime").is_not_null())
-    )
-
-    # Extract year and month for partitioning
+    # 2. Cast timestamps to string (Utf8) before parsing
     df = df.with_columns([
-        pl.col("tpep_pickup_datetime").dt.year().alias("year"),
-        pl.col("tpep_pickup_datetime").dt.month().alias("month")
+        pl.col("tpep_pickup_datetime").cast(pl.Utf8),
+        pl.col("tpep_dropoff_datetime").cast(pl.Utf8),
     ])
 
-    print(f"Cleaned {df.shape[0]} rows.")
+    # 3. Parse strings to Datetime with exact format and non-strict mode
+    df = df.with_columns([
+        pl.col("tpep_pickup_datetime")
+          .str.strptime(pl.Datetime, format="%Y-%m-%d %H:%M:%S", strict=False),
+        pl.col("tpep_dropoff_datetime")
+          .str.strptime(pl.Datetime, format="%Y-%m-%d %H:%M:%S", strict=False),
+    ])
+
+    # 4. Drop any rows where parsing failed (null timestamps)
+    df = df.filter(
+        pl.col("tpep_pickup_datetime").is_not_null() &
+        pl.col("tpep_dropoff_datetime").is_not_null()
+    )
+
+    # 5. Add year and month columns for partitioning
+    df = df.with_columns([
+        pl.col("tpep_pickup_datetime").dt.year().alias("year"),
+        pl.col("tpep_pickup_datetime").dt.month().alias("month"),
+    ])
+
     return df
