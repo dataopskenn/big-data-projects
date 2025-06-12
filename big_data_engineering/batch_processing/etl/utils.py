@@ -7,7 +7,7 @@ def expand_ranges(values, range_str, *, min_val, max_val):
     """
     Combine explicit integer values and/or a 'start-end' range string
     into a sorted list of unique integers, validating bounds.
-    """
+"""
     result = set()
 
     if values:
